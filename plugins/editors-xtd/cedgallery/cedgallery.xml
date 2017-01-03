@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="plugin" group="editors-xtd" method="upgrade">
+    <name>PLG_EDITORXTD_CEDGALLERY</name>
+    <creationDate>2016-12-31</creationDate>
+    <version>1.4.1</version>
+
+    <author>Galaxiis</author>
+    <authorEmail>galaxiiscom@gmail.com</authorEmail>
+    <authorUrl>www.galaxiis.com</authorUrl>
+
+    <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
+
+    <description>PLG_EDITORXTD_CEDGALLERY_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="cedgallery">cedgallery.php</filename>
+		<filename plugin="cedgallery">index.html</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_editors-xtd_cedgallery.ini</language>
+    </languages>
+</extension>

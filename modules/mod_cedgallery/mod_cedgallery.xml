@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension version="3.4" type="module" client="site" method="upgrade">
+    <name>CedGallery | Galaxiis.com</name>
+    <element>mod_cedgallery</element>
+
+    <version>1.4.1</version>
+    <description>CedGallery managing your image gallery has never been so simple!</description>
+
+    <files>
+        <filename module="mod_cedgallery">mod_cedgallery.php</filename>
+        <filename module="mod_cedgallery">index.html</filename>
+        <folder>tmpl</folder>
+    </files>
+
+    <languages>
+        <language tag="en-GB">en-GB.mod_cedgallery.ini</language>
+        <language tag="en-GB">en-GB.mod_cedgallery.sys.ini</language>
+    </languages>
+
+    <config addfieldpath="libraries/galaxiis/fields">
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                        name="folder"
+                        type="folderlist"
+                        label="Folder"
+                        description="Select folder from /images/"
+                        hide_default="1"
+                        directory="images"
+                        default="installation"
+                        exclude="administrator|component|cache|includes|language|libraries|logs|media|modules|plugins|templates|test|tmp|bin|cli|layouts"/>
+
+
+                <!--
+                <field name="recurse" type="radio" default="true"
+                       label="Recursively" description="Recursively search for files"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="folder-album" type="radio" default="0"
+                       label="Use Subfolder As Albums" description="Use Subfolder As Albums. Every subdirectory and it content will create an album. Default is No."
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="default-thumbnail" type="media" default="media/com_cedgallery/images/folder.png" size="50" required="true" label="Default"
+                       description="Default image thumbnail if not at least one image is found in every directory"/>
+                -->
+                <field name="sorting" type="radio" default="exif"
+                       label="Sorting" description="In which order pictures found in folder will be sorted. Default is 'Exif if any else file date'"
+                       class="btn-group">
+                    <option value="none">None</option>
+                    <option value="random">Random</option>
+                    <option value="reverse">Reverse</option>
+                    <option value="exif">Exif if any else file date</option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Exif" label="Exif">
+                <field name="exifTitle1" type="radio" default="FileName"
+                       label="Title 1st part" description="Select EXIF field to be use for title first part, Attention only jpg contains metadata (Exif)"
+                       class="btn-group">
+                    <option value="">Nothing</option>
+                    <option value="iptc.title">IPTC title</option>
+
+                    <option value="FileName">FileName</option>
+                    <option value="ImageDescription">ImageDescription</option>
+                    <option value="COMPUTED.UserComment">COMPUTED.UserComment</option>
+                    <option value="COMPUTED.Copyright">COMPUTED.Copyright</option>
+                    <option value="COMPUTED.Copyright.Photographer">COMPUTED.Copyright.Photographer</option>
+                </field>
+                <field name="exifTitle2" type="radio" default=" "
+                       label="Title 2st part" description="Select EXIF field to be use for title second part, Attention only jpg contains metadata (Exif)"
+                       class="btn-group">
+                    <option value="">Nothing</option>
+                    <option value="iptc.title">IPTC title</option>
+                    <option value="FileName">FileName</option>
+                    <option value="ImageDescription">ImageDescription</option>
+                    <option value="COMPUTED.UserComment">COMPUTED.UserComment</option>
+                    <option value="COMPUTED.Copyright">COMPUTED.Copyright</option>
+                    <option value="COMPUTED.Copyright.Photographer">COMPUTED.Copyright.Photographer</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="Imagedisplay" label="Image display">
+
+                <field name="v_colorSchemeViewer" type="radio" default="none"
+                       label="Color Scheme Viewer" description="Image viewercolor scheme"
+                       class="btn-group">
+                    <option value="none">none</option>
+
+                </field>
+
+                <field name="v_slideshowDelay" type="integer" default="1"
+                       label="Slideshow Delay"
+                       description="Photo autoplay speed in seconds (slideshow)"
+                       first="1"
+                       last="60"
+                       step="1"/>
+
+                <field name="v_slideshowAutoStart" type="radio" default="false"
+                       label="Slideshow AutoStart" description="DStart automatically the slideshow when an image is displayed. Default is False."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="v_viewer" type="radio" default="internal"
+                       label="viewer" description="Image display method: internal, fancybox" class="btn-group">
+                    <option value="internal">internal</option>
+                    <option value="fancybox">fancybox</option>
+                </field>
+
+                <field name="v_viewerToolbar_display" type="radio" default="true"
+                       label="Viewer Toolbar Display" description="Display or hide the toolbar. Default is True."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="v_viewerToolbar_position" type="radio" default="bottom"
+                       label="Viewer Toolbar Position" description="Vertical position. Default is bottom."
+                       class="btn-group">
+                    <option value="top">top</option>
+                    <option value="bottom">bottom</option>
+                </field>
+
+                <field name="v_viewerToolbar_style" type="radio" default="innerImage"
+                       label="Viewer Toolbar Style" description="Toolbar style. Default is innerImage."
+                       class="btn-group">
+                    <option value="innerImage">innerImage</option>
+                    <option value="stuckImage">stuckImage</option>
+                    <option value="fullWidth">fullWidth</option>
+                </field>
+                <field name="v_viewerToolbar_standard" type="list"
+                       selected="minimizeButton,previousButton"
+
+                       label="Viewer Toolbar Standard"
+                       description="List of items to display in the standard toolbar. The order is taken into account. Default value is 'minimizeButton, previousButton, pageCounter, nextButton, playPauseButton, fullscreenButton, infoButton, linkOriginalButton, closeButton, label'"
+                       multiple="true">
+                    <option value="minimizeButton" default="true">minimizeButton</option>
+                    <option value="previousButton" default="true">previousButton</option>
+                    <option value="nextButton">nextButton</option>
+                    <option value="playPauseButton">playPauseButton</option>
+                    <option value="fullscreenButton">fullscreenButton</option>
+                    <option value="infoButton">infoButton</option>
+                    <option value="linkOriginalButton">linkOriginalButton</option>
+                    <option value="closeButton">closeButton</option>
+                    <option value="label">label</option>
+                </field>
+                <field name="v_viewerToolbar_minimized" type="list" default="minimizeButton,label" label="Viewer Toolbar Standard"
+                       description="List of items to display in the standard toolbar. The order is taken into account. Default value is 'minimizeButton, previousButton, pageCounter, nextButton, playPauseButton, fullscreenButton, infoButton, linkOriginalButton, closeButton, label'"
+                       multiple="true">
+                    <option value="minimizeButton">minimizeButton</option>
+                    <option value="previousButton">previousButton</option>
+                    <option value="nextButton">nextButton</option>
+                    <option value="playPauseButton">playPauseButton</option>
+                    <option value="fullscreenButton">fullscreenButton</option>
+                    <option value="infoButton">infoButton</option>
+                    <option value="linkOriginalButton">linkOriginalButton</option>
+                    <option value="closeButton">closeButton</option>
+                    <option value="label">label</option>
+                </field>
+
+                <field name="v_viewerDisplayLogo" type="radio" default="false"
+                       label="Viewer Display Logo" description="Display logo over images (defined in CSS file)"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="v_imageTransition" type="radio" default=" "
+                       label="Image Transition" description="Image swipe animation." class="btn-group">
+                    <option value="swipe">swipe</option>
+                    <option value="slideAppear">slideAppear</option>
+                </field>
+
+            </fieldset>
+
+
+            <fieldset name="thumbnails" label="Thumbnails">
+                <field name="spacer_morescaling" type="spacer"
+                       label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;'Get More Scaling' &lt;a target=&quot;_blank&quot; href=&quot;http://www.galaxiis.com&quot;&gt;get the paid version&lt;/a&gt; of CedGallery to have more than 6 scaling method&lt;/div&gt;"
+                       default="" description=""/>
+
+                <field name="any" type="cedimage" default="1" size="6" label="Original Picture"
+                       source="'/media/com_cedgallery/images/scaling/original.jpg"
+                       description="determines when to scale an image"
+                       class="btn-group"/>
+
+                <field name="jimageResize" type="scaling" required="true" default="1" size="6" label="Resizing ex: 150x150"
+                       base_path="/media/com_cedgallery/images/scaling/"
+                       description="Determines how to scale an image, here a preview of thumbnails requested in 150 x 150 pixels and its result."
+                       class="btn-group">
+                    <option value="1">MOD_CEDGALLERY_RESIZE1</option>
+                    <option value="2">MOD_CEDGALLERY_RESIZE2</option>
+                </field>
+
+                <field name="spacer_moresoutput" type="spacer"
+                       label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;'Get More Format (gif, png)' &lt;a target=&quot;_blank&quot; href=&quot;http://www.galaxiis.com&quot;&gt;get the paid version&lt;/a&gt; of CedGallery&lt;/div&gt;"
+                       default="" description=""/>
+                <field name="thumbnailsOutput" type="radio" default="2" label="Thumbnails Type"
+                       description="The image type options to use in saving the file." class="btn-group">
+                    <option value="2">JPEG</option>
+                </field>
+
+
+                <field name="advancedLayout" type="radio" default="none"
+                       label="Cascading grid layout" description="Choose Layout. if 'None' then thumbnails are of exact width and height,
+                        if 'Cascading Grid Layout' then thumbnails are of automatic height and desired width,
+                        if 'Justified Layout' then thumbnails are of automatic width and desired height,"
+                       class="btn-group">
+                    <option value="cascadingGridLayout">Cascading Grid Layout</option>
+                    <option value="justifiedLayout">Justified Layout</option>
+                    <option value="none">None</option>
+                </field>
+
+                <field name="thumbnailHeight" type="integer" default="154" label="Thumbnail Height"
+                       description="Thumbnails height in pixels, or 'auto"
+                       first="1"
+                       last="400"
+                       step="1"/>
+                <field name="thumbnailWidth" type="integer" default="230" label="Thumbnail Width"
+                       description="Thumbnails width in pixels, or 'auto' or 'autoUpScale"
+                       first="1"
+                       last="400"
+                       step="1"/>
+
+                <field name="v_thumbnailAlignment" type="radio" default="center"
+                       label="Thumbnail Alignment" description="Set the thumbnail alignment.
+Possible values: 'left', 'right', 'justified', 'center'.
+Note: value 'justified' will ignore the 'thumbnailGutterWidth'." class="btn-group">
+                    <option value="left">left</option>
+                    <option value="right">right</option>
+                    <option value="justified">justified</option>
+                    <option value="center">center</option>
+                </field>
+                <field name="v_thumbnailGutterWidth" type="integer" default="2" label="Thumbnail Gutter Width"
+                       description="Set the horizontal gutter space between thumbnails."
+                       first="1"
+                       last="10"
+                       step="1"/>
+                <field name="v_thumbnailGutterHeight" type="integer" default="2" label="Thumbnail Gutter Height"
+                       description="Set the vertical  gutter space between thumbnails."
+                       first="1"
+                       last="10"
+                       step="1"/>
+
+                <field name="jpgquality" type="integer" default="85"
+                       first="0"
+                       last="100"
+                       step="5"
+                       label="Thumbnail JPG Quality"
+                       description="The degree of compression can be adjusted, allowing a selectable tradeoff between storage size and image quality."/>
+                <field name="pngquality" type="integer" default="9"
+                       first="1"
+                       last="10"
+                       step="1"
+                       label="Thumbnail PNG Quality"
+                       description="The degree of compression can be adjusted, allowing a selectable tradeoff between storage size and image quality."/>
+                <!--<field name="thumbnailLabel" type="list" default="internal" multiple="multiple"
+                       label="Thumbnail Label" description="Display options for the image label (title and description)" class="btn-group">
+
+                    <option value="overImageOnBottom">overImageOnBottom</option>
+                    <option value="overImageOnBottom">overImageOnBottom</option>
+                    <option value="overImageOnBottom">overImageOnBottom</option>
+                    <option value="overImageOnBottom">overImageOnBottom</option>
+                    # position, display, displayDescription, titleMaxLength, descriptionMaxLength, hideIcons, align, title, itemsCount
+                </field>
+                -->
+                <field name="v_thumbnailLabel.position" type="radio" default="overImageOnBottom"
+                       label="Thumbnail Label Position" description="" class="btn-group">
+                    <option value="overImageOnBottom">overImageOnBottom</option>
+                    <option value="overImageOnTop">overImageOnTop</option>
+                    <option value="overImageOnMiddle">overImageOnMiddle</option>
+                    <option value="onBottom">onBottom</option>
+                </field>
+                <field name="v_thumbnailLabel.display" type="radio" default="true"
+                       label="Thumbnail Label Display" description="Display or hide the label."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_thumbnailLabel.displayDescription" type="radio" default="true"
+                       label="Thumbnail Label Display Description" description="Display or hide the Description."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_thumbnailLabel.titleMaxLength" type="integer" default="0" label="Thumbnail Label Title MaxLength"
+                       description="Title maximum length to display."
+                       first="0"
+                       last="20"
+                       step="1"/>
+                <field name="v_thumbnailLabel.descriptionMaxLength" type="integer" default="0" label="Thumbnail Label Description MaxLength"
+                       description="Description maximum length to display."
+                       first="0"
+                       last="20"
+                       step="1"/>
+                <field name="v_thumbnailLabel.hideIcons" type="radio" default="false"
+                       label="Thumbnail Label Display Description" description="Hide thumbnails icons. Default is false."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_thumbnailLabel.align" type="radio" default="right"
+                       label="Thumbnail Label Align Description" description="Horizontal text alignment."
+                       class="btn-group">
+                    <option value="right">right</option>
+                    <option value="center">center</option>
+                    <option value="left">left</option>
+                </field>
+                <field name="v_thumbnailLabel.itemsCount" type="radio" default="none"
+                       label="Thumbnail Label Items Count" description="Add the number of items in one per photo album."
+                       class="btn-group">
+                    <option value="none">none</option>
+                    <option value="title">title</option>
+                    <option value="description">description</option>
+                </field>
+
+                <field name="spacer_thumbnailseffect" type="spacer"
+                       label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;'Get 22 Hover effects More ' &lt;a target=&quot;_blank&quot; href=&quot;https://www.galaxiis.com/cedgallery-subscribe/&quot;&gt;get the paid version&lt;/a&gt; of CedGallery&lt;/div&gt;"
+                       default="" description=""/>
+                <!-- TODO support multiple combination -->
+                <field name="v_thumbnailHoverEffect" type="list" default="slideUp"
+                       label="Thumbnail Hover Effect" description="Thumbnail mouse hover effect."
+                       class="btn-group">
+                    <option value="slideUp">slideUp</option>
+                    <option value="slideDown">slideDown</option>
+
+                    <!-- Transit jQuery plugin is required for following additional values:
+
+'imageScale150', 'imageScale150Outside', 'scale120', 'overScale', 'overScaleOutside', 'scaleLabelOverImage', 'rotateCornerBR', 'rotateCornerBL', 'imageRotateCornerBR', 'imageRotateCornerBL', 'imageFlipHorizontal', 'imageFlipVertical'
+
+Include it in your <head>:
+<script type="text/javascript" src = "third.party/transit/jquery.transit.min.js"> </script> -->
+                </field>
+            </fieldset>
+            <fieldset name="colors" label="Colors">
+                <field name="v_theme" type="radio" default="default"
+                       label="Theme" description="Name of the theme"
+                       class="btn-group">
+                    <option value="default">default</option>
+
+                </field>
+                <field name="v_colorScheme" type="radio" default="light"
+                       label="Color Scheme" description="Gallery color scheme (breadcrumb and thumbnails). Default is light"
+                       class="btn-group">
+                    <option value="none">none</option>
+                    <option value="dark">dark</option>
+                    <option value="darkRed">darkRed</option>
+                    <option value="darkGreen">darkGreen</option>
+                    <option value="darkBlue">darkBlue</option>
+                    <option value="darkOrange">darkOrange</option>
+                    <option value="light">light</option>
+                    <option value="lightBackground">lightBackground</option>
+                </field>
+                <field name="v_RTL" type="radio" default="false"
+                       label="Display Direction" description="display direction from Right To Left (RTL), default is false"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+
+            </fieldset>
+            <fieldset name="animation" label="Animation">
+                <field name="v_touchAnimation" type="radio" default="true"
+                       label="Touch Animation" description="Enable animation on touch event (= tap twice to show the image)"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+
+                <field name="v_thumbnailDisplayInterval" type="integer" default="30"
+                       label="Thumbnail Display Interval"
+                       description="Interval in milliseconds between the display of 2 thumbnails"
+                       first="30"
+                       last="500"
+                       step="100"/>
+                <field name="v_thumbnailDisplayTransition" type="radio" default="true"
+                       label="Thumbnail Display Transition" description="Transition animation before displaying one thumbnail"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+            </fieldset>
+            <fieldset name="Performances" label="Performances">
+
+                <field name="thumbnails-caching" type="radio" default="0"
+                       label="Agressive Thumbnails Caching" description="Resizing big images is a costly operation.
+                       Joomla set as default a cache of 900 seconds, meaning that every 900 seconds the resize will happen again for all images in the current gallery.
+                       If true thumbnails never expire and get created only once, as long as thumbnails exist in cache, they wont be created again even if module cache expire.
+                       To force the creation of thumbnails either empty the cache or remove the file manually. Default is true"
+                       class="btn-group">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="v_thumbnailLazyLoad" type="radio" default="true"
+                       label="Thumbnail Lazy Load" description="Lazy load of thumbnails image (images are loaded only when displayed in the viewport)"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_thumbnailLazyLoadTreshold" type="integer" default="100"
+                       label="Thumbnail Lazy Load Treshold"
+                       description="Extend the viewport area (in pixel) for thumbnails image lazy load"
+                       first="1"
+                       last="400"
+                       step="1"/>
+                <field name="v_lazyBuild" type="radio" default="none"
+                       label="Lazy Build" description="display the gallery only when visible (= in the viewport)"
+                       class="btn-group">
+                    <option value="none">none</option>
+                    <option value="loadData">loadData</option>
+                    <option value="display">display</option>
+                </field>
+                <field name="v_lazyBuildTreshold" type="integer" default="150"
+                       label="Lazy Build Treshold"
+                       description="Shorten the viewport area height (in pixel) for lazyBuild."
+                       first="1"
+                       last="400"
+                       step="1"/>
+
+
+                <field name="library" type="radio" default="local"
+                       label="Load engine" description="Load javascript from your server or from the CDN. Default is from 'Content Delivery Network'."
+                       class="btn-group">
+                    <option value="local">Local</option>
+                    <option value="cdn">Content Delivery Network</option>
+                </field>
+
+            </fieldset>
+            <fieldset name="Layout" label="Layout">
+
+                <field name="v_maxItemsPerLine" type="integer" default="0" label="MaxItems / Line"
+                       description="Maximum number of thumbnails per line. Ignored when thumbnailWidth='auto'. Default is 0."
+                       first="0"
+                       last="20"
+                       step="1"/>
+                <field name="v_maxWidth" type="integer" default="0" label="Maximum Width"
+                       description="Maximum width of the gallery in pixels. 0 = disabled. Default is 0."
+                       first="0"
+                       last="900"
+                       step="10"/>
+
+
+                <field name="v_paginationMaxItemsPerPage" type="integer" default="20"
+                       label="Pagination Max Items / Page"
+                       description="Maximum number of thumbnails per page (pagination) 0= pagination is disabled. Ignored when thumbnailWidth='auto' or thumbnailHeight='auto'."
+                       first="1"
+                       last="50"
+                       step="1"/>
+                <field name="v_paginationMaxLinesPerPage" type="integer" default="5"
+                       label="Pagination Max Line / Page"
+                       description="Maximum number of thumbnail lines per page (pagination) 0= pagination is disabled. Ignored when thumbnailWidth='auto' or thumbnailHeight='auto'."
+                       first="1"
+                       last="20"
+                       step="1"/>
+
+                <field name="v_galleryToolbarWidthAligned" type="radio" default="true"
+                       label="Gallery Toolbar Width Aligned" description="Toolbar is automatically resized to the width of the thumbnails area"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_galleryToolbarHideIcons" type="radio" default="false"
+                       label="Gallery Toolbar Hide Icons" description="Hide icons in toolbar (breadcrumb)"
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+                <field name="v_galleryFullpageButton" type="radio" default="true"
+                       label="Gallery Full Page Button" description="Enable button in the toolbar to display the gallery in fullpage."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="v_galleryFullpageBgColor" type="color" default="#111"
+                       label="Gallery Background color" description="Background color of the gallery when in fullpage."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+
+                <field name="v_locationHash" type="radio" default="false"
+                       label="Location Hash"
+                       description="Browser back/forward navigation and Deep Linking of images and photo albums. Note: only one gallery per page should use this feature."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+
+                <field name="v_breadcrumbAutoHideTopLevel" type="radio" default="false"
+                       label="Breadcrumb AutoHide" description="Breadcrumb AutoHide Top Level: The breadcrumb is hidden when on top navigation level."
+                       class="btn-group">
+                    <option value="false">JNO</option>
+                    <option value="true">JYES</option>
+                </field>
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+                <field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                       description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+                <field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC"/>
+                <field name="cachemode" type="hidden" default="static">
+                    <option value="static"/>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

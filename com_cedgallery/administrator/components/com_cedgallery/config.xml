@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ @package     CedGallery
+ @subpackage  com_cedgallery
+
+ @copyright   Copyright (C) 2013-2016 galaxiis.com All rights reserved.
+ @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
+              worldwide exclusive usage rights including the rights to reproduce, distribute and make the software available to the public
+              in any form is Galaxiis.com
+              see LICENSE.txt
+ -->
+<config>
+    <fieldset name="Settings" label="Settings">
+
+        <field name="spacer_dlid" type="spacer"
+               label="&lt;div style=&quot;font-weight:bold;font-size:11px;color:#000;padding:8px;margin:0;background:#ffd;&quot;&gt;You need to specify your Download ID before you can receive updates for CedGallery. Visit https://www.galaxiis.com/member/ with a valid subscription to get the Download Id..&lt;/a&gt;&lt;/div&gt;"
+               default="" description=""/>
+        <field name="downloadid" type="text"
+               required="true"
+               default=""
+               label="Download Id"
+               description="Defines the parameters necessary to automatically update the extension. Visit https://www.galaxiis.com/member/ with a valid subscription to get the Download Id."
+                />
+
+
+    </fieldset>
+</config>
