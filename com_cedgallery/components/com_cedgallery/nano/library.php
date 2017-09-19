@@ -3,7 +3,7 @@
  * @package     CedGallery
  * @subpackage  com_cedgallery
  *
- * @copyright   Copyright (C) 2013-2016 galaxiis.com All rights reserved.
+ * @copyright   Copyright (C) 2013-2017 galaxiis.com All rights reserved.
  * @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
  *              worldwide exclusive usage rights including the rights to reproduce, distribute and make the software available to the public
  *              in any form is Galaxiis.com
@@ -27,11 +27,11 @@ class cedGalleryLibrary
     function __construct($theme, $type, $base)
     {
         if ($type == 'local') {
-            $this->script[] =  $base."media/com_cedgallery/js/jquery.nanogallery.min.js?v=1.4.1";
+            $this->script[] =  $base."media/com_cedgallery/js/jquery.nanogallery.min.js?v=3.0.1";
             if ($theme == 'default') {
-                $this->styleSheet[] =  $base."media/com_cedgallery/css/nanogallery.min.css?v=1.4.1";
+                $this->styleSheet[] =  $base."media/com_cedgallery/css/nanogallery.min.css?v=3.0.1";
             } else {
-                $this->styleSheet[] =  $base."media/com_cedgallery/css/themes/$theme/nanogallery_$theme.min.css?v=1.4.1";
+                $this->styleSheet[] =  $base."media/com_cedgallery/css/themes/$theme/nanogallery_$theme.min.css?v=3.0.1";
             }
         } else {
             $this->script[] =  "//cdnjs.cloudflare.com/ajax/libs/nanogallery/". self::GALLERY_VERSION ."/jquery.nanogallery.min.js";

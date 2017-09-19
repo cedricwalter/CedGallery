@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.4" method="upgrade">
     <name>com_cedgallery</name>
-    <creationDate>2016-12-31</creationDate>
+    <creationDate>2017-09-19</creationDate>
 
     <author>Galaxiis</author>
     <authorEmail>galaxiiscom@gmail.com</authorEmail>
     <authorUrl>www.galaxiis.com</authorUrl>
 
-    <version>1.4.1</version>
+    <version>3.0.1</version>
 
-    <copyright>Copyright (C) 2013-2016 galaxiis.com All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013-2017 galaxiis.com All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL 3.0</license>
 
     <description>A set of modules, plugins extensions for SmugMug the famous paid digital photo sharing website</description>
@@ -34,13 +34,8 @@
 
     <administration>
         <menu link="option=com_cedgallery">cedGallery</menu>
-        <submenu>
-            <menu view="liveupdate" img="../media/com_cedgallery/images/live-update.png">Live Update</menu>
-        </submenu>
-
         <files folder="administrator/components/com_cedgallery">
             <folder>views</folder>
-            <folder>liveupdate</folder>
             <filename>config.xml</filename>
             <file>cedgallery.php</file>
             <file>controller.php</file>

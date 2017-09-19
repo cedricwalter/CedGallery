@@ -3,7 +3,7 @@
  * @package     CedGallery
  * @subpackage  com_cedgallery
  *
- * @copyright   Copyright (C) 2013-2016 galaxiis.com All rights reserved.
+ * @copyright   Copyright (C) 2013-2017 galaxiis.com All rights reserved.
  * @license     The author and holder of the copyright of the software is Cédric Walter. The licensor and as such issuer of the license and bearer of the
  *              worldwide exclusive usage rights including the rights to reproduce, distribute and make the software available to the public
  *              in any form is Galaxiis.com
@@ -23,11 +23,13 @@ require_once(dirname(__FILE__) . '/parser.php');
 
 class plgContentCedGallery extends JPlugin
 {
-    function plgContentCedGallery(& $subject, $config)
-    {
-        parent::__construct($subject, $config);
-        $this->loadLanguage();
-    }
+    /**
+     * Load the language file on instantiation.
+     *
+     * @var    boolean
+     * @since  3.1
+     */
+    protected $autoloadLanguage = true;
 
     /**
      * @param $context
@@ -40,26 +42,26 @@ class plgContentCedGallery extends JPlugin
     {
         //Do not run in admin area and non HTML  (rss, json, error)
         $app = JFactory::getApplication();
-        if ($app->isAdmin() || JFactory::getDocument()->getType() !== 'html')
+        if ($app->isClient('administrator') || JFactory::getDocument()->getType() !== 'html')
         {
-            return true;
+            return;
         }
 
         $canProceed = $context == 'com_content.article';
         if (!$canProceed) {
-            return true;
+            return;
         }
 
         $parser = new plgContentCedGalleryParser();
 
         //simple performance check to determine whether bot should process further
         if (!$parser->active($row->text)) {
-            return true;
+            return;
         }
 
         $row->text = $this->replaceText($row->text, $params);
 
-        return true;
+        return;
     }
 
     private function replaceText($text, &$params)
